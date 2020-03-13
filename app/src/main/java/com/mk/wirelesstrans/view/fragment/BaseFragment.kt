@@ -9,7 +9,9 @@ import androidx.fragment.app.Fragment
  * @CreateDate:     2020/03/13 15:03
  */
 abstract class BaseFragment : Fragment() {
-    fun initData() {}
+    open fun initData() {}
 
     abstract fun initView()
+
+    open fun initListener() {}
 }
