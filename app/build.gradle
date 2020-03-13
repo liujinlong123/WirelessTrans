@@ -34,4 +34,19 @@ dependencies {
     testImplementation "junit:junit:$rootProject.junitVersion"
     androidTestImplementation "androidx.test.ext:junit:$rootProject.extJunitVersion"
     androidTestImplementation "androidx.test.espresso:espresso-core:$rootProject.espressoCoreVersion"
+
+    /* Navigation */
+    // Java language implementation
+    implementation "androidx.navigation:navigation-fragment:$rootProject.navVersion"
+    implementation "androidx.navigation:navigation-ui:$rootProject.navVersion"
+
+    // Kotlin
+    implementation "androidx.navigation:navigation-fragment-ktx:$rootProject.navVersion"
+    implementation "androidx.navigation:navigation-ui-ktx:$rootProject.navVersion"
+
+    // Dynamic Feature Module Support
+    implementation "androidx.navigation:navigation-dynamic-features-fragment:$rootProject.navVersion"
+
+    // Testing Navigation
+    androidTestImplementation "androidx.navigation:navigation-testing:$rootProject.navVersion"
 }
