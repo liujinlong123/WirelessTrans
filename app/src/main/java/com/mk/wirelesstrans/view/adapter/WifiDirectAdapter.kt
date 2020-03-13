@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.mk.wirelesstrans.R
 import com.mk.wirelesstrans.data.bean.WifiDirectItem
 import com.mk.wirelesstrans.databinding.WifiDirectAdapterBinding
+import com.mk.wirelesstrans.inf.OnListItemClickListener
 
 /**
  * @ClassName:      WifiDirectAdapter
@@ -20,6 +21,12 @@ class WifiDirectAdapter constructor(
 
     companion object {
         private const val TAG = "WifiDirectAdapter"
+    }
+
+    private var listener: OnListItemClickListener<Int>? = null
+
+    fun setListener(listener: OnListItemClickListener<Int>) {
+        this.listener = listener
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -37,7 +44,7 @@ class WifiDirectAdapter constructor(
         holder.bind(dataList[position])
 
         holder.binding.root.setOnClickListener {
-
+            listener?.onItemClick(position)
         }
     }
 

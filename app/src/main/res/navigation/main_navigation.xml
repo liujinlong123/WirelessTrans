@@ -11,6 +11,22 @@
         android:name="com.mk.wirelesstrans.view.fragment.home.HomeViewPagerFragment"
         tools:layout="@layout/home_viewpager_fragment" >
 
+        <action
+            android:id="@+id/home_to_direct_connect_fragment"
+            app:destination="@id/direct_connect_fragment"/>
     </fragment>
+
+    <!-- Wi-Fi -->
+    <!-- Wi-Fi - Detail -->
+    <fragment
+        android:id="@+id/direct_connect_fragment"
+        android:label="direct_connect_fragment"
+        android:name="com.mk.wirelesstrans.view.fragment.wifi.DirectConnectFragment"
+        tools:layout="@layout/direct_connect_fragment" >
+
+    </fragment>
+
+    <!-- Bluetooth -->
+
 
 </navigation>

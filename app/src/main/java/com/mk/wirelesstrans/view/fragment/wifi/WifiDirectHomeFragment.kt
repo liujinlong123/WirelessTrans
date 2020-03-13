@@ -12,10 +12,13 @@ import android.view.ViewGroup
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.Navigation
 import com.mk.wirelesstrans.MyApplication
+import com.mk.wirelesstrans.R
 import com.mk.wirelesstrans.broadcast.WifiDirectReceiver
 import com.mk.wirelesstrans.data.bean.WifiDirectItem
 import com.mk.wirelesstrans.databinding.WifiHomeFragmentBinding
+import com.mk.wirelesstrans.inf.OnListItemClickListener
 import com.mk.wirelesstrans.view.adapter.WifiDirectAdapter
 import com.mk.wirelesstrans.view.fragment.BaseFragment
 import com.mk.wirelesstrans.viewmodel.WifiDirectVM
@@ -84,6 +87,13 @@ class WifiDirectHomeFragment : BaseFragment(), WifiP2pManager.ChannelListener {
 
                 Log.v(TAG, " ------> 我改变了")
             })
+
+        // Item 点击事件
+        adapter.setListener(object : OnListItemClickListener<Int> {
+            override fun onItemClick(t: Int) {
+                Navigation.findNavController(binding.root).navigate(R.id.home_to_direct_connect_fragment)
+            }
+        })
     }
 
     // ViewPager 切换时会调用 - onPause
