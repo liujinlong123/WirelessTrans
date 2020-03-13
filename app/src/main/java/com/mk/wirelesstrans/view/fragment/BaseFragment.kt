@@ -8,5 +8,8 @@ import androidx.fragment.app.Fragment
  * @Author:         Aiden.liu
  * @CreateDate:     2020/03/13 15:03
  */
-class BaseFragment : Fragment() {
+abstract class BaseFragment : Fragment() {
+    fun initData() {}
+
+    abstract fun initView()
 }

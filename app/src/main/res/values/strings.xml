@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">WirelessTrans</string>
+
+    <!-- Home -->
+    <string name="home_wifi_title">Wi-Fi</string>
+    <string name="home_bluetooth_title">Bluetooth</string>
 </resources>

@@ -54,4 +54,7 @@ dependencies {
 
     // Testing Navigation
     androidTestImplementation "androidx.navigation:navigation-testing:$rootProject.navVersion"
+
+    // Material
+    implementation "com.google.android.material:material:$rootProject.materialVersion"
 }
