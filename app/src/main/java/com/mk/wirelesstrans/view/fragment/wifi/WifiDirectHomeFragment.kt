@@ -1,10 +1,6 @@
 package com.mk.wirelesstrans.view.fragment.wifi
 
-import android.content.Context
-import android.content.IntentFilter
-import android.net.wifi.p2p.WifiP2pManager
 import android.os.Bundle
-import android.os.Looper
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -13,12 +9,10 @@ import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
-import com.mk.wirelesstrans.MyApplication
 import com.mk.wirelesstrans.R
-import com.mk.wirelesstrans.broadcast.WifiDirectReceiver
-import com.mk.wirelesstrans.data.bean.WifiDirectItem
 import com.mk.wirelesstrans.databinding.WifiHomeFragmentBinding
 import com.mk.wirelesstrans.inf.OnListItemClickListener
+import com.mk.wirelesstrans.view.activity.MainActivity
 import com.mk.wirelesstrans.view.adapter.WifiDirectAdapter
 import com.mk.wirelesstrans.view.fragment.BaseFragment
 import com.mk.wirelesstrans.viewmodel.WifiDirectVM
@@ -29,23 +23,15 @@ import com.mk.wirelesstrans.viewmodel.WifiDirectVM
  * @Author:         Aiden.liu
  * @CreateDate:     2020/03/13 15:44
  */
-class WifiDirectHomeFragment : BaseFragment(), WifiP2pManager.ChannelListener {
+class WifiDirectHomeFragment : BaseFragment() {
     companion object {
         private const val TAG = "WifiDirectHomeFragment"
     }
 
     private lateinit var binding: WifiHomeFragmentBinding
-    private lateinit var manager: WifiP2pManager
-    private lateinit var channel: WifiP2pManager.Channel
-    private lateinit var receiver: WifiDirectReceiver
 
     private lateinit var model: WifiDirectVM
     private lateinit var adapter: WifiDirectAdapter
-
-    private val intentFilter = IntentFilter().apply {
-        addAction(WifiP2pManager.WIFI_P2P_STATE_CHANGED_ACTION)
-        addAction(WifiP2pManager.WIFI_P2P_PEERS_CHANGED_ACTION)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -66,12 +52,6 @@ class WifiDirectHomeFragment : BaseFragment(), WifiP2pManager.ChannelListener {
     }
 
     override fun initData() {
-        manager = MyApplication.instance.getSystemService(Context.WIFI_P2P_SERVICE) as WifiP2pManager
-        channel = manager.initialize(context, Looper.getMainLooper(), this)
-        channel.also {
-            receiver = WifiDirectReceiver(manager, it, this)
-        }
-
         model = ViewModelProvider(activity as FragmentActivity).get(WifiDirectVM::class.java)
         adapter = WifiDirectAdapter(model.wifiDirectList.value!!)
     }
@@ -81,8 +61,7 @@ class WifiDirectHomeFragment : BaseFragment(), WifiP2pManager.ChannelListener {
     }
 
     override fun initListener() {
-        model.wifiDirectList.observe(viewLifecycleOwner,
-            Observer<ArrayList<WifiDirectItem>> {
+        model.wifiDirectList.observe(viewLifecycleOwner, Observer {
                 adapter.notifyDataSetChanged()
 
                 Log.v(TAG, " ------> 我改变了")
@@ -91,6 +70,7 @@ class WifiDirectHomeFragment : BaseFragment(), WifiP2pManager.ChannelListener {
         // Item 点击事件
         adapter.setListener(object : OnListItemClickListener<Int> {
             override fun onItemClick(t: Int) {
+                model.wifiDirectItem.value = model.wifiDirectList.value!![t]
                 Navigation.findNavController(binding.root).navigate(R.id.home_to_direct_connect_fragment)
             }
         })
@@ -100,48 +80,14 @@ class WifiDirectHomeFragment : BaseFragment(), WifiP2pManager.ChannelListener {
     override fun onResume() {
         super.onResume()
 
-        receiver.also {
-            context?.registerReceiver(it, intentFilter)
-        }
-
-        startDiscover()
+        (activity as MainActivity).startDiscover()
     }
 
     // ViewPager 切换时会调用 - onPause
     override fun onPause() {
         super.onPause()
 
-        stopDiscover()
-        receiver.also {
-            context?.unregisterReceiver(it)
-        }
-    }
-
-    private fun startDiscover() {
-        manager.discoverPeers(channel, object : WifiP2pManager.ActionListener {
-            override fun onSuccess() {
-
-            }
-
-            override fun onFailure(reason: Int) {
-
-            }
-        })
-    }
-
-    private fun stopDiscover() {
-        manager.stopPeerDiscovery(channel, object : WifiP2pManager.ActionListener {
-            override fun onSuccess() {
-
-            }
-
-            override fun onFailure(reason: Int) {
-
-            }
-        })
-    }
-
-    override fun onChannelDisconnected() {
+        (activity as MainActivity).stopDiscover()
 
     }
 }

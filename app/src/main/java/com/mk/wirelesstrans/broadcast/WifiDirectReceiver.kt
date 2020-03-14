@@ -4,10 +4,10 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.net.wifi.p2p.WifiP2pManager
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModelProvider
 import com.mk.wirelesstrans.data.bean.WifiDirectItem
+import com.mk.wirelesstrans.util.CommonUtil
+import com.mk.wirelesstrans.view.activity.BaseActivity
 import com.mk.wirelesstrans.viewmodel.WifiDirectVM
 
 /**
@@ -19,7 +19,7 @@ import com.mk.wirelesstrans.viewmodel.WifiDirectVM
 class WifiDirectReceiver constructor(
     private val manager: WifiP2pManager,
     private val channel: WifiP2pManager.Channel,
-    private val fragment: Fragment
+    private val activity: BaseActivity
 ) : BroadcastReceiver() {
 
     companion object {
@@ -30,7 +30,6 @@ class WifiDirectReceiver constructor(
         if (intent == null) return
 
         when (intent.action!!) {
-            // WifiDirectHomeFragment
             WifiP2pManager.WIFI_P2P_STATE_CHANGED_ACTION -> {
                 when (intent.getIntExtra(WifiP2pManager.EXTRA_WIFI_STATE, -1)) {
                     WifiP2pManager.WIFI_P2P_STATE_ENABLED -> {
@@ -43,18 +42,17 @@ class WifiDirectReceiver constructor(
                 }
             }
 
-            // WifiDirectHomeFragment
             WifiP2pManager.WIFI_P2P_PEERS_CHANGED_ACTION -> {
                 manager.requestPeers(channel) { p2pDeviceList ->
-                    val model = ViewModelProvider(
-                        fragment.activity as FragmentActivity
-                    ).get(WifiDirectVM::class.java)
+                    val model = ViewModelProvider(activity)
+                        .get(WifiDirectVM::class.java)
 
                     val dataList = model.wifiDirectList.value!!
                     dataList.clear()
                     for (wifiItem in p2pDeviceList.deviceList) {
                         dataList.add(WifiDirectItem().apply {
                             device = wifiItem
+                            state = CommonUtil.resToString(getState(wifiItem.status))
                         })
                     }
                     model.wifiDirectList.value = dataList

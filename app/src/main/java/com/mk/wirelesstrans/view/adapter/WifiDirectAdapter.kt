@@ -54,6 +54,7 @@ class WifiDirectAdapter constructor(
         fun bind(item: WifiDirectItem) {
             binding.deviceName.text = item.device?.deviceName
             binding.deviceAddress.text = item.device?.deviceAddress
+            binding.deviceState.text = item.state
         }
     }
 }

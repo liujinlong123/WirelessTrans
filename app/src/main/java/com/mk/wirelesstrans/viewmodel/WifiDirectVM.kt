@@ -11,4 +11,6 @@ import com.mk.wirelesstrans.data.bean.WifiDirectItem
  */
 class WifiDirectVM : BaseVM() {
     val wifiDirectList = MutableLiveData<ArrayList<WifiDirectItem>>(ArrayList())
+
+    val wifiDirectItem = MutableLiveData<WifiDirectItem>()
 }

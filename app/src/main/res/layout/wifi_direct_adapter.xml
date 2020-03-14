@@ -25,12 +25,22 @@
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/device_name"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:textSize="20sp"
                 android:textColor="@color/black"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"/>
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/device_state"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/device_state"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:textColor="@color/gray"
+                android:textSize="18sp"/>
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/device_address"

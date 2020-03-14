@@ -7,4 +7,12 @@
 
     <!-- Common -->
     <string name="PERMISSION_DENIED">Permission denied</string>
+
+    <!-- Wi-Fi Direct -->
+    <string name="wifi_direct_device_available">Available</string>
+    <string name="wifi_direct_device_invited">Invited</string>
+    <string name="wifi_direct_device_connected">Connected</string>
+    <string name="wifi_direct_device_failed">Failed</string>
+    <string name="wifi_direct_device_unavailable">Unavailable</string>
+    <string name="wifi_direct_device_unknown">Unknown</string>
 </resources>

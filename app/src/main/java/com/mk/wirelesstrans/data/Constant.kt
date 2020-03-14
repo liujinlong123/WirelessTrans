@@ -35,4 +35,11 @@ object Constant {
                 Manifest.permission.ACCESS_NETWORK_STATE)
         }
     }
+
+    interface Type {
+        companion object {
+            val WIFI = 0
+            val BLUETOOTH = 1
+        }
+    }
 }
