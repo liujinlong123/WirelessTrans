@@ -1,5 +1,6 @@
 package com.mk.wirelesstrans.viewmodel
 
+import android.net.wifi.p2p.WifiP2pInfo
 import androidx.lifecycle.MutableLiveData
 import com.mk.wirelesstrans.data.bean.WifiDirectItem
 
@@ -13,4 +14,6 @@ class WifiDirectVM : BaseVM() {
     val wifiDirectList = MutableLiveData<ArrayList<WifiDirectItem>>(ArrayList())
 
     val wifiDirectItem = MutableLiveData<WifiDirectItem>()
+
+    val wifiP2pInfo = MutableLiveData<WifiP2pInfo>()
 }

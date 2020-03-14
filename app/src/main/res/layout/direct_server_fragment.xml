@@ -82,20 +82,15 @@
 
             </androidx.cardview.widget.CardView>
 
-            <!--<com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/input_layout"
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/content"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                android:textSize="20sp"
+                android:textColor="@color/black"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/card_info" >
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/input"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Please enter your text"/>
-            </com.google.android.material.textfield.TextInputLayout>-->
+                app:layout_constraintTop_toBottomOf="@id/card_info"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>

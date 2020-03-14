@@ -3,6 +3,7 @@ package com.mk.wirelesstrans.broadcast
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.net.NetworkInfo
 import android.net.wifi.p2p.WifiP2pManager
 import androidx.lifecycle.ViewModelProvider
 import com.mk.wirelesstrans.data.bean.WifiDirectItem
@@ -60,7 +61,14 @@ class WifiDirectReceiver constructor(
             }
 
             WifiP2pManager.WIFI_P2P_CONNECTION_CHANGED_ACTION -> {
-
+                val networkInfo = intent.getParcelableExtra(WifiP2pManager.EXTRA_NETWORK_INFO) as NetworkInfo
+                if (networkInfo.isConnected) {
+                    manager.requestConnectionInfo(channel) {
+                        val model = ViewModelProvider(activity)
+                            .get(WifiDirectVM::class.java)
+                        model.wifiP2pInfo.value = it
+                    }
+                }
             }
 
             WifiP2pManager.WIFI_P2P_THIS_DEVICE_CHANGED_ACTION -> {
