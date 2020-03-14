@@ -10,7 +10,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.mk.wirelesstrans.databinding.DirectConnectFragmentBinding
+import com.mk.wirelesstrans.databinding.DirectClientFragmentBinding
 import com.mk.wirelesstrans.inf.DeviceActionListener
 import com.mk.wirelesstrans.view.fragment.BaseFragment
 import com.mk.wirelesstrans.viewmodel.WifiDirectVM
@@ -21,13 +21,13 @@ import com.mk.wirelesstrans.viewmodel.WifiDirectVM
  * @Author:         Aiden.liu
  * @CreateDate:     2020/03/13 20:54
  */
-class DirectConnectFragment : BaseFragment() {
+class DirectClientFragment : BaseFragment() {
 
     companion object {
         private const val TAG = "DirectConnectFragment"
     }
 
-    private lateinit var binding: DirectConnectFragmentBinding
+    private lateinit var binding: DirectClientFragmentBinding
     private lateinit var model: WifiDirectVM
 
     override fun onCreateView(
@@ -35,7 +35,7 @@ class DirectConnectFragment : BaseFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = DirectConnectFragmentBinding.inflate(inflater, container, false)
+        binding = DirectClientFragmentBinding.inflate(inflater, container, false)
 
         return binding.root
     }

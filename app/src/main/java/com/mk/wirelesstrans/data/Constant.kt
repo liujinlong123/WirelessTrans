@@ -36,10 +36,31 @@ object Constant {
         }
     }
 
+    // 主页展示类型
     interface Type {
         companion object {
-            val WIFI = 0
-            val BLUETOOTH = 1
+            const val WIFI = 0
+            const val BLUETOOTH = 1
         }
     }
+
+    // DataTransService 传参
+    interface DataTransIntent {
+        companion object {
+            const val ACTION_SEND_DATA = "com.mk.wirelesstrans.wifi.direct.SEND_DATA"
+            const val EXTRAS_STRING = "string_content"
+            const val EXTRAS_KEY_CODE = "key_code"
+            const val EXTRAS_GROUP_OWNER_ADDRESS = "go_host"
+            const val EXTRAS_GROUP_OWNER_PORT = "go_port"
+        }
+    }
+
+    // Socket 类型
+    interface SocketType {
+        companion object {
+            const val CLIENT = 0
+            const val SERVER = 1
+        }
+    }
+
 }

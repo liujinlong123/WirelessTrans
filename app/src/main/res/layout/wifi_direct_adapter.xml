@@ -15,10 +15,7 @@
         app:contentPadding="10dp"
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
-        android:layout_marginTop="10dp"
-        android:foreground="@drawable/card_ripple"
-        android:focusable="true"
-        android:clickable="true">
+        android:layout_marginTop="10dp">
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -51,6 +48,26 @@
                 app:layout_constraintTop_toBottomOf="@id/device_name"
                 app:layout_constraintStart_toStartOf="parent"
                 android:layout_marginTop="20dp"/>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/client"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/device_address"
+                app:layout_constraintEnd_toStartOf="@id/server"
+                android:text="@string/wifi_direct_btn_client"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="5dp"
+                android:backgroundTint="@color/blue"/>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/server"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="@id/client"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:text="@string/wifi_direct_btn_server"
+                android:backgroundTint="@color/blue"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>

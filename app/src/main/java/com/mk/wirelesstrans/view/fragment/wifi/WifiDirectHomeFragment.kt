@@ -10,6 +10,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import com.mk.wirelesstrans.R
+import com.mk.wirelesstrans.data.Constant
 import com.mk.wirelesstrans.databinding.WifiHomeFragmentBinding
 import com.mk.wirelesstrans.inf.OnListItemClickListener
 import com.mk.wirelesstrans.view.activity.MainActivity
@@ -53,7 +54,7 @@ class WifiDirectHomeFragment : BaseFragment() {
 
     override fun initData() {
         model = ViewModelProvider(activity as FragmentActivity).get(WifiDirectVM::class.java)
-        adapter = WifiDirectAdapter(model.wifiDirectList.value!!)
+        adapter = WifiDirectAdapter(model.wifiDirectList.value!!, model)
     }
 
     override fun initView() {
@@ -70,8 +71,15 @@ class WifiDirectHomeFragment : BaseFragment() {
         // Item 点击事件
         adapter.setListener(object : OnListItemClickListener<Int> {
             override fun onItemClick(t: Int) {
-                model.wifiDirectItem.value = model.wifiDirectList.value!![t]
-                Navigation.findNavController(binding.root).navigate(R.id.home_to_direct_connect_fragment)
+                when (t) {
+                    Constant.SocketType.CLIENT -> {
+                        Navigation.findNavController(binding.root).navigate(R.id.home_to_direct_client_fragment)
+                    }
+
+                    Constant.SocketType.SERVER -> {
+                        Navigation.findNavController(binding.root).navigate(R.id.home_to_direct_server_fragment)
+                    }
+                }
             }
         })
     }
@@ -88,6 +96,5 @@ class WifiDirectHomeFragment : BaseFragment() {
         super.onPause()
 
         (activity as MainActivity).stopDiscover()
-
     }
 }
