@@ -86,14 +86,13 @@ class DirectClientFragment : BaseFragment() {
             }
 
             context?.startService(transIntent)
-            Log.v(TAG, "点击了一下 ------> 发送成功")
         }
 
         // 这时候已经连接上了
         model.wifiP2pInfo.observe(viewLifecycleOwner, Observer { info ->
             this.info = info
 
-            Log.v(TAG, " ------> 这时候连接上了")
+            Log.v(TAG, " ------> 这时候连接上了 $info ${info.groupOwnerAddress}")
         })
     }
 

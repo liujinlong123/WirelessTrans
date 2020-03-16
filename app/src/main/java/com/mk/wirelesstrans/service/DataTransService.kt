@@ -2,6 +2,7 @@ package com.mk.wirelesstrans.service
 
 import android.app.IntentService
 import android.content.Intent
+import android.util.Log
 import com.mk.wirelesstrans.data.Constant
 import java.io.IOException
 import java.net.InetSocketAddress
@@ -31,6 +32,7 @@ class DataTransService constructor(
 
             val socket = Socket()
 
+            Log.v(TAG, "点击了一下 ------> 准备发送(${host}  ${port})")
             try {
                 socket.bind(null)
                 socket.connect(InetSocketAddress(host, port), SOCKET_TIMEOUT)
@@ -38,12 +40,15 @@ class DataTransService constructor(
                 val output = socket.getOutputStream()
                 output.write(content.toByteArray())
                 output.close()
+
+                Log.v(TAG, "点击了一下 ------> 发送成功(${host}  ${port})")
             } catch (e: IOException) {
                 e.printStackTrace()
             } finally {
                 if (socket.isConnected) {
                     try {
                         socket.close()
+                        Log.v("TAG", " ------> 这里关闭了Socket")
                     } catch (e: IOException) {
                         e.printStackTrace()
                     }

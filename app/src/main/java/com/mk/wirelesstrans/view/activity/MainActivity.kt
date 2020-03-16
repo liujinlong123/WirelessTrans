@@ -43,6 +43,14 @@ class MainActivity : BaseActivity(), DeviceActionListener, WifiP2pManager.Channe
         )
 
         initData()
+
+        registerReceiver(wifiDirectReceiver, intentFilter)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+
+        unregisterReceiver(wifiDirectReceiver)
     }
 
     private fun initData() {
@@ -53,18 +61,6 @@ class MainActivity : BaseActivity(), DeviceActionListener, WifiP2pManager.Channe
         channel.also {
             wifiDirectReceiver = WifiDirectReceiver(manager, it, this)
         }
-    }
-
-    override fun onResume() {
-        super.onResume()
-
-        registerReceiver(wifiDirectReceiver, intentFilter)
-    }
-
-    override fun onPause() {
-        super.onPause()
-
-        unregisterReceiver(wifiDirectReceiver)
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -96,11 +92,11 @@ class MainActivity : BaseActivity(), DeviceActionListener, WifiP2pManager.Channe
             Constant.Type.WIFI -> {
                 manager.stopPeerDiscovery(channel, object : WifiP2pManager.ActionListener {
                     override fun onSuccess() {
-
+                        Log.v(TAG, " ------> Wi-Fi 停止搜索成功")
                     }
 
                     override fun onFailure(reason: Int) {
-
+                        Log.v(TAG, " ------> Wi-Fi 停止搜索失败")
                     }
                 })
             }
@@ -151,6 +147,7 @@ class MainActivity : BaseActivity(), DeviceActionListener, WifiP2pManager.Channe
 
             override fun onFailure(reason: Int) {
                 toast("Connect failed. Retry.")
+                Log.v(TAG, " ------> 连接失败")
             }
         })
     }
@@ -161,11 +158,12 @@ class MainActivity : BaseActivity(), DeviceActionListener, WifiP2pManager.Channe
     override fun disconnect() {
         manager.removeGroup(channel, object : WifiP2pManager.ActionListener {
             override fun onSuccess() {
-
+                Log.v(TAG, " ------> 断开连接成功")
             }
 
             override fun onFailure(reason: Int) {
                 toast("Disconnect failed. Reason: $reason")
+                Log.v(TAG, " ------> 断开连接失败")
             }
         })
     }

@@ -42,6 +42,9 @@
                 app:cardCornerRadius="10dp"
                 app:cardElevation="2dp"
                 app:contentPadding="5dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="@drawable/card_ripple"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
