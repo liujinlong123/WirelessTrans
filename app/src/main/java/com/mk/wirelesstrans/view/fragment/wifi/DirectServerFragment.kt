@@ -95,7 +95,7 @@ class DirectServerFragment : BaseFragment() {
             super.onPostExecute(result)
 
             if (result != null) {
-                content.text = result
+                content.append(result)
             }
         }
 
