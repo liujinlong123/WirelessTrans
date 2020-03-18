@@ -34,6 +34,12 @@ class WifiDirectHomeFragment : BaseFragment() {
     private lateinit var model: WifiDirectVM
     private lateinit var adapter: WifiDirectAdapter
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        (activity as MainActivity).startDiscover()
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -84,16 +90,8 @@ class WifiDirectHomeFragment : BaseFragment() {
         })
     }
 
-    // ViewPager 切换时会调用 - onPause
-    override fun onResume() {
-        super.onResume()
-
-        (activity as MainActivity).startDiscover()
-    }
-
-    // ViewPager 切换时会调用 - onPause
-    override fun onPause() {
-        super.onPause()
+    override fun onDestroy() {
+        super.onDestroy()
 
         (activity as MainActivity).stopDiscover()
     }
