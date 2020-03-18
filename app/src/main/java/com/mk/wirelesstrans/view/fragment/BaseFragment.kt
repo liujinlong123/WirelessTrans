@@ -11,7 +11,7 @@ import androidx.fragment.app.Fragment
 abstract class BaseFragment : Fragment() {
     open fun initData() {}
 
-    abstract fun initView()
+    open fun initView() {}
 
     open fun initListener() {}
 }
