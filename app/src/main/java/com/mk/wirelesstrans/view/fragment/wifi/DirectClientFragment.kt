@@ -108,7 +108,7 @@ class DirectClientFragment : BaseFragment(), View.OnClickListener {
                     action = Constant.DataTransIntent.ACTION_SEND_DATA
                     putExtra(Constant.DataTransIntent.EXTRAS_STRING, "哼哼哼 我来啦")
                     putExtra(Constant.DataTransIntent.EXTRAS_GROUP_OWNER_ADDRESS, info?.groupOwnerAddress?.hostAddress)
-                    putExtra(Constant.DataTransIntent.EXTRAS_GROUP_OWNER_PORT, 8988)
+                    putExtra(Constant.DataTransIntent.EXTRAS_GROUP_OWNER_PORT, Constant.SocketType.PORT)
                 }
 
                 context?.startService(transIntent)

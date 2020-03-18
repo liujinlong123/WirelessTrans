@@ -12,6 +12,7 @@ import androidx.appcompat.widget.AppCompatTextView
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.mk.wirelesstrans.data.Constant
 import com.mk.wirelesstrans.databinding.DirectServerFragmentBinding
 import com.mk.wirelesstrans.util.CommonUtil
 import com.mk.wirelesstrans.view.activity.MainActivity
@@ -79,7 +80,7 @@ class DirectServerFragment : BaseFragment(), WifiP2pManager.ConnectionInfoListen
 
     internal class DataServerAsyncTask constructor(private val content: AppCompatTextView) : AsyncTask<Void, Void, String>() {
         override fun doInBackground(vararg params: Void?): String {
-            val serverSocket = ServerSocket(8989)
+            val serverSocket = ServerSocket(Constant.SocketType.PORT)
             try {
                 Log.v(TAG, "Server ------> Socket opened")
 

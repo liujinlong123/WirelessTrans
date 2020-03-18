@@ -60,6 +60,7 @@ object Constant {
         companion object {
             const val CLIENT = 0
             const val SERVER = 1
+            const val PORT = 8988
         }
     }
 
