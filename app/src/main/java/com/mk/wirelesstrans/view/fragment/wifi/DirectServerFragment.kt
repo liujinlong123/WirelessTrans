@@ -1,5 +1,7 @@
 package com.mk.wirelesstrans.view.fragment.wifi
 
+import android.net.wifi.p2p.WifiP2pInfo
+import android.net.wifi.p2p.WifiP2pManager
 import android.os.AsyncTask
 import android.os.Bundle
 import android.util.Log
@@ -21,12 +23,15 @@ import java.net.ServerSocket
 /**
  * Wi-Fi Direct Server 负责接收消息
  */
-class DirectServerFragment : BaseFragment() {
+class DirectServerFragment : BaseFragment(), WifiP2pManager.ConnectionInfoListener {
     companion object {
         private const val TAG = "DirectServerFragment"
     }
 
-    private lateinit var model: WifiDirectVM
+    private val model: WifiDirectVM by lazy {
+        ViewModelProvider(activity as FragmentActivity).get(WifiDirectVM::class.java)
+    }
+
     private lateinit var binding: DirectServerFragmentBinding
 
     override fun onCreateView(
@@ -42,34 +47,13 @@ class DirectServerFragment : BaseFragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        initData()
         initListener()
-    }
-
-    override fun onResume() {
-        super.onResume()
-
-        (activity as MainActivity).startDiscover()
-    }
-
-    override fun onPause() {
-        super.onPause()
-
-        (activity as MainActivity).stopDiscover()
     }
 
     override fun onDestroy() {
         super.onDestroy()
 
         (activity as MainActivity).disconnect()
-    }
-
-    override fun initData() {
-        model = ViewModelProvider(activity as FragmentActivity).get(WifiDirectVM::class.java)
-    }
-
-    override fun initView() {
-
     }
 
     /**
@@ -82,6 +66,13 @@ class DirectServerFragment : BaseFragment() {
             if (info.groupFormed && info.isGroupOwner) {
                 DataServerAsyncTask(binding.content).execute()
             }
+        })
+
+        // 界面信息
+        model.wifiDirectItem.observe(viewLifecycleOwner, Observer {
+            binding.deviceName.text = it.device?.deviceName
+            binding.deviceAddress.text = it.device?.deviceAddress
+            binding.deviceState.text = it.state
         })
     }
 
@@ -121,5 +112,9 @@ class DirectServerFragment : BaseFragment() {
                 Log.v(TAG, " ------> 这里是返回结果$result")
             }
         }
+    }
+
+    override fun onConnectionInfoAvailable(info: WifiP2pInfo?) {
+
     }
 }
