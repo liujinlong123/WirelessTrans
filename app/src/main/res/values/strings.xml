@@ -15,8 +15,8 @@
     <string name="wifi_direct_device_failed">Failed</string>
     <string name="wifi_direct_device_unavailable">Unavailable</string>
     <string name="wifi_direct_device_unknown">Unknown</string>
-    <string name="wifi_direct_btn_client">Client</string>
-    <string name="wifi_direct_btn_server">Server</string>
+    <string name="wifi_direct_btn_group_owner">Group Owner</string>
+    <string name="wifi_direct_btn_group_client">Group Client</string>
 
     <string name="wifi_direct_client_connect">Connect</string>
     <string name="wifi_direct_client_disconnect">Disconnect</string>

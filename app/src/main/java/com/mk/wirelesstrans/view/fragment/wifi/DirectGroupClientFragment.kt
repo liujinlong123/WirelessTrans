@@ -13,7 +13,7 @@ import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.mk.wirelesstrans.data.Constant
-import com.mk.wirelesstrans.databinding.DirectServerFragmentBinding
+import com.mk.wirelesstrans.databinding.DirectGroupClientFragmentBinding
 import com.mk.wirelesstrans.util.CommonUtil
 import com.mk.wirelesstrans.view.activity.MainActivity
 import com.mk.wirelesstrans.view.fragment.BaseFragment
@@ -24,7 +24,7 @@ import java.net.ServerSocket
 /**
  * Wi-Fi Direct Server 负责接收消息
  */
-class DirectServerFragment : BaseFragment(), WifiP2pManager.ConnectionInfoListener {
+class DirectGroupClientFragment : BaseFragment(), WifiP2pManager.ConnectionInfoListener {
     companion object {
         private const val TAG = "DirectServerFragment"
     }
@@ -33,14 +33,14 @@ class DirectServerFragment : BaseFragment(), WifiP2pManager.ConnectionInfoListen
         ViewModelProvider(activity as FragmentActivity).get(WifiDirectVM::class.java)
     }
 
-    private lateinit var binding: DirectServerFragmentBinding
+    private lateinit var binding: DirectGroupClientFragmentBinding
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = DirectServerFragmentBinding.inflate(inflater, container, false)
+        binding = DirectGroupClientFragmentBinding.inflate(inflater, container, false)
 
         return binding.root
     }

@@ -15,25 +15,25 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.mk.wirelesstrans.R
 import com.mk.wirelesstrans.data.Constant
-import com.mk.wirelesstrans.databinding.DirectClientFragmentBinding
+import com.mk.wirelesstrans.databinding.DirectGroupOwnerFragmentBinding
 import com.mk.wirelesstrans.inf.DeviceActionListener
 import com.mk.wirelesstrans.service.DataTransService
 import com.mk.wirelesstrans.view.fragment.BaseFragment
 import com.mk.wirelesstrans.viewmodel.WifiDirectVM
 
 /**
- * @ClassName:      DirectConnectFragment
+ * @ClassName:      DirectGroupOwnerFragment
  * @Description:    com.mk.wirelesstrans.view.fragment.wifi
  * @Author:         Aiden.liu
  * @CreateDate:     2020/03/13 20:54
  */
-class DirectClientFragment : BaseFragment(), View.OnClickListener {
+class DirectGroupOwnerFragment : BaseFragment(), View.OnClickListener {
 
     companion object {
         private const val TAG = "DirectConnectFragment"
     }
 
-    private lateinit var binding: DirectClientFragmentBinding
+    private lateinit var binding: DirectGroupOwnerFragmentBinding
     private val model: WifiDirectVM by lazy {
         ViewModelProvider(activity as FragmentActivity).get(WifiDirectVM::class.java)
     }
@@ -45,7 +45,7 @@ class DirectClientFragment : BaseFragment(), View.OnClickListener {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = DirectClientFragmentBinding.inflate(inflater, container, false)
+        binding = DirectGroupOwnerFragmentBinding.inflate(inflater, container, false)
 
         return binding.root
     }

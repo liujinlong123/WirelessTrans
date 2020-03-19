@@ -25,15 +25,15 @@
     <fragment
         android:id="@+id/direct_client_fragment"
         android:label="direct_client_fragment"
-        android:name="com.mk.wirelesstrans.view.fragment.wifi.DirectClientFragment"
-        tools:layout="@layout/direct_client_fragment" />
+        android:name="com.mk.wirelesstrans.view.fragment.wifi.DirectGroupOwnerFragment"
+        tools:layout="@layout/direct_group_owner_fragment" />
 
     <!-- Wi-Fi - Direct Server -->
     <fragment
         android:id="@+id/direct_server_fragment"
         android:label="direct_server_fragment"
-        android:name="com.mk.wirelesstrans.view.fragment.wifi.DirectServerFragment"
-        tools:layout="@layout/direct_server_fragment" />
+        android:name="com.mk.wirelesstrans.view.fragment.wifi.DirectGroupClientFragment"
+        tools:layout="@layout/direct_group_client_fragment" />
 
     <!-- Bluetooth -->
 
