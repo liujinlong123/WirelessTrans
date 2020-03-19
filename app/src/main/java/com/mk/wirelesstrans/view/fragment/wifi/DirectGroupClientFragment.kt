@@ -1,30 +1,25 @@
 package com.mk.wirelesstrans.view.fragment.wifi
 
-import android.net.wifi.p2p.WifiP2pInfo
-import android.net.wifi.p2p.WifiP2pManager
-import android.os.AsyncTask
+import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.widget.AppCompatTextView
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.mk.wirelesstrans.R
 import com.mk.wirelesstrans.data.Constant
 import com.mk.wirelesstrans.databinding.DirectGroupClientFragmentBinding
-import com.mk.wirelesstrans.util.CommonUtil
+import com.mk.wirelesstrans.service.DataTransService
 import com.mk.wirelesstrans.view.activity.MainActivity
 import com.mk.wirelesstrans.view.fragment.BaseFragment
 import com.mk.wirelesstrans.viewmodel.WifiDirectVM
-import java.io.IOException
-import java.net.ServerSocket
 
 /**
  * Wi-Fi Direct Server 负责接收消息
  */
-class DirectGroupClientFragment : BaseFragment(), WifiP2pManager.ConnectionInfoListener {
+class DirectGroupClientFragment : BaseFragment(), View.OnClickListener {
     companion object {
         private const val TAG = "DirectServerFragment"
     }
@@ -65,7 +60,7 @@ class DirectGroupClientFragment : BaseFragment(), WifiP2pManager.ConnectionInfoL
             if (info == null) return@Observer
 
             if (info.groupFormed && info.isGroupOwner) {
-                DataServerAsyncTask(binding.content).execute()
+                // DataServerAsyncTask(binding.content).execute()
             }
         })
 
@@ -75,47 +70,26 @@ class DirectGroupClientFragment : BaseFragment(), WifiP2pManager.ConnectionInfoL
             binding.deviceAddress.text = it.device?.deviceAddress
             binding.deviceState.text = it.state
         })
+
+        binding.send.setOnClickListener(this)
     }
 
-
-    internal class DataServerAsyncTask constructor(private val content: AppCompatTextView) : AsyncTask<Void, Void, String>() {
-        override fun doInBackground(vararg params: Void?): String {
-            val serverSocket = ServerSocket(Constant.SocketType.PORT)
-            try {
-                Log.v(TAG, "Server ------> Socket opened")
-
-                val client = serverSocket.accept()
-                Log.v(TAG, "Server ------> Connection done")
-
-                val input = client.getInputStream()
-                val content = CommonUtil.readStream(input)
-                input.close()
-
-                return content
-            } catch (e: IOException) {
-                e.printStackTrace()
-                return ""
-            } finally {
-                try {
-                    serverSocket.close()
-                } catch (e: IOException) {
-                    e.printStackTrace()
+    override fun onClick(v: View?) {
+        when (v?.id) {
+            R.id.send -> {
+                val info = model.wifiP2pInfo.value
+                val transIntent = Intent(activity, DataTransService::class.java)
+                transIntent.apply {
+                    action = Constant.DataTransIntent.ACTION_SEND_DATA
+                    putExtra(Constant.DataTransIntent.EXTRAS_STRING, "哼哼哼 我来啦")
+                    putExtra(Constant.DataTransIntent.EXTRAS_GROUP_OWNER_ADDRESS, "192.168.49.1")
+                    putExtra(Constant.DataTransIntent.EXTRAS_GROUP_OWNER_PORT, Constant.SocketType.PORT)
                 }
+
+                context?.startService(transIntent)
             }
+
+            else -> {}
         }
-
-        override fun onPostExecute(result: String?) {
-            super.onPostExecute(result)
-
-            if (result != null) {
-                content.append(result)
-
-                Log.v(TAG, " ------> 这里是返回结果$result")
-            }
-        }
-    }
-
-    override fun onConnectionInfoAvailable(info: WifiP2pInfo?) {
-
     }
 }

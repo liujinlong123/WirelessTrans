@@ -1,6 +1,5 @@
 package com.mk.wirelesstrans.view.fragment.wifi
 
-import android.content.Intent
 import android.net.wifi.WpsInfo
 import android.net.wifi.p2p.WifiP2pConfig
 import android.net.wifi.p2p.WifiP2pDevice
@@ -14,20 +13,20 @@ import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.mk.wirelesstrans.R
-import com.mk.wirelesstrans.data.Constant
 import com.mk.wirelesstrans.databinding.DirectGroupOwnerFragmentBinding
 import com.mk.wirelesstrans.inf.DeviceActionListener
-import com.mk.wirelesstrans.service.DataTransService
+import com.mk.wirelesstrans.inf.HandleWork
+import com.mk.wirelesstrans.util.task.DataServerAsyncTask
 import com.mk.wirelesstrans.view.fragment.BaseFragment
 import com.mk.wirelesstrans.viewmodel.WifiDirectVM
 
 /**
  * @ClassName:      DirectGroupOwnerFragment
- * @Description:    com.mk.wirelesstrans.view.fragment.wifi
+ * @Description:    这里是作为Wi-Fi Direct发起连接的host
  * @Author:         Aiden.liu
  * @CreateDate:     2020/03/13 20:54
  */
-class DirectGroupOwnerFragment : BaseFragment(), View.OnClickListener {
+class DirectGroupOwnerFragment : BaseFragment(), View.OnClickListener, HandleWork {
 
     companion object {
         private const val TAG = "DirectConnectFragment"
@@ -73,18 +72,13 @@ class DirectGroupOwnerFragment : BaseFragment(), View.OnClickListener {
 
             Log.v(TAG, " ------> 这时候连接上了 $info ${info.groupOwnerAddress}")
         })
+
+        DataServerAsyncTask(this).execute()
     }
 
-    /**
-     * 连接服务端
-     */
-    private fun connectDevice(device: WifiP2pDevice?) {
-        if (device == null) return
-
-        val config = WifiP2pConfig()
-        config.deviceAddress = device.deviceAddress
-        config.wps.setup = WpsInfo.PBC
-        (activity as DeviceActionListener).connect(config)
+    override fun handleWork(t: Any?) {
+        val content = t!!.toString()
+        binding.content.append(content)
     }
 
     override fun onClick(v: View?) {
@@ -101,7 +95,7 @@ class DirectGroupOwnerFragment : BaseFragment(), View.OnClickListener {
 
             // 点击发送数据
             R.id.send -> {
-                if (info == null) return
+                /*if (info == null) return
 
                 val transIntent = Intent(activity, DataTransService::class.java)
                 transIntent.apply {
@@ -111,8 +105,20 @@ class DirectGroupOwnerFragment : BaseFragment(), View.OnClickListener {
                     putExtra(Constant.DataTransIntent.EXTRAS_GROUP_OWNER_PORT, Constant.SocketType.PORT)
                 }
 
-                context?.startService(transIntent)
+                context?.startService(transIntent)*/
             }
         }
+    }
+
+    /**
+     * 作为host发起连接
+     */
+    private fun connectDevice(device: WifiP2pDevice?) {
+        if (device == null) return
+
+        val config = WifiP2pConfig()
+        config.deviceAddress = device.deviceAddress
+        config.wps.setup = WpsInfo.PBC
+        (activity as DeviceActionListener).connect(config)
     }
 }

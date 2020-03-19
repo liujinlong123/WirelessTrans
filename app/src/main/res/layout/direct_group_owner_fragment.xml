@@ -85,6 +85,17 @@
 
             </androidx.cardview.widget.CardView>
 
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:textSize="18sp"
+                android:textColor="@color/black"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/card_info" />
+
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/connect"
                 android:layout_width="0dp"
@@ -92,8 +103,8 @@
                 android:layout_marginStart="10dp"
                 android:layout_marginEnd="10dp"
                 android:layout_marginTop="10dp"
-                android:text="@string/wifi_direct_client_connect"
-                app:layout_constraintTop_toBottomOf="@id/card_info"
+                android:text="@string/wifi_direct_connect"
+                app:layout_constraintTop_toBottomOf="@id/content"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:backgroundTint="@color/blue"/>
@@ -105,7 +116,7 @@
                 android:layout_marginStart="10dp"
                 android:layout_marginEnd="10dp"
                 android:layout_marginTop="5dp"
-                android:text="@string/wifi_direct_client_disconnect"
+                android:text="@string/wifi_direct_disconnect"
                 app:layout_constraintTop_toBottomOf="@id/connect"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -118,7 +129,7 @@
                 android:layout_marginStart="10dp"
                 android:layout_marginEnd="10dp"
                 android:layout_marginTop="5dp"
-                android:text="@string/wifi_direct_client_send"
+                android:text="@string/wifi_direct_send"
                 app:layout_constraintTop_toBottomOf="@id/disconnect"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
