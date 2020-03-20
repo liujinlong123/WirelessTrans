@@ -65,6 +65,7 @@ class DirectGroupOwnerFragment : BaseFragment(), View.OnClickListener, HandleWor
         binding.connect.setOnClickListener(this)
         binding.disconnect.setOnClickListener(this)
         binding.send.setOnClickListener(this)
+        binding.prepare.setOnClickListener(this)
 
         // 这时候已经连接上了
         model.wifiP2pInfo.observe(viewLifecycleOwner, Observer { info ->
@@ -72,8 +73,6 @@ class DirectGroupOwnerFragment : BaseFragment(), View.OnClickListener, HandleWor
 
             Log.v(TAG, " ------> 这时候连接上了 $info ${info.groupOwnerAddress}")
         })
-
-        DataServerAsyncTask(this).execute()
     }
 
     override fun handleWork(t: Any?) {
@@ -106,6 +105,11 @@ class DirectGroupOwnerFragment : BaseFragment(), View.OnClickListener, HandleWor
                 }
 
                 context?.startService(transIntent)*/
+            }
+
+            // 准备接收数据
+            R.id.prepare -> {
+                DataServerAsyncTask(this).execute()
             }
         }
     }

@@ -1,6 +1,8 @@
 package com.mk.wirelesstrans.view.fragment
 
+import android.widget.Toast
 import androidx.fragment.app.Fragment
+import com.mk.wirelesstrans.MyApplication
 
 /**
  * @ClassName:      BaseFragment
@@ -14,4 +16,8 @@ abstract class BaseFragment : Fragment() {
     open fun initView() {}
 
     open fun initListener() {}
+
+    open fun toast(resId: Int) {
+        Toast.makeText(MyApplication.instance, resId, Toast.LENGTH_SHORT).show()
+    }
 }

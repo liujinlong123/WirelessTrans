@@ -21,4 +21,6 @@
     <string name="wifi_direct_connect">Connect</string>
     <string name="wifi_direct_disconnect">Disconnect</string>
     <string name="wifi_direct_send">Send</string>
+    <string name="wifi_direct_prepare">Prepare</string>
+    <string name="wifi_direct_not_ready_yet">The connection not ready yet</string>
 </resources>

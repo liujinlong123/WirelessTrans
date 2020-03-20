@@ -56,14 +56,6 @@ class DirectGroupClientFragment : BaseFragment(), View.OnClickListener {
      * 这时候已经连接上了
      */
     override fun initListener() {
-        model.wifiP2pInfo.observe(viewLifecycleOwner, Observer { info ->
-            if (info == null) return@Observer
-
-            if (info.groupFormed && info.isGroupOwner) {
-                // DataServerAsyncTask(binding.content).execute()
-            }
-        })
-
         // 界面信息
         model.wifiDirectItem.observe(viewLifecycleOwner, Observer {
             binding.deviceName.text = it.device?.deviceName
@@ -78,15 +70,19 @@ class DirectGroupClientFragment : BaseFragment(), View.OnClickListener {
         when (v?.id) {
             R.id.send -> {
                 val info = model.wifiP2pInfo.value
-                val transIntent = Intent(activity, DataTransService::class.java)
-                transIntent.apply {
-                    action = Constant.DataTransIntent.ACTION_SEND_DATA
-                    putExtra(Constant.DataTransIntent.EXTRAS_STRING, "哼哼哼 我来啦")
-                    putExtra(Constant.DataTransIntent.EXTRAS_GROUP_OWNER_ADDRESS, "192.168.49.1")
-                    putExtra(Constant.DataTransIntent.EXTRAS_GROUP_OWNER_PORT, Constant.SocketType.PORT)
-                }
+                if (info != null && info.groupFormed && info.groupOwnerAddress != null) {
+                    val transIntent = Intent(activity, DataTransService::class.java)
+                    transIntent.apply {
+                        action = Constant.DataTransIntent.ACTION_SEND_DATA
+                        putExtra(Constant.DataTransIntent.EXTRAS_STRING, "哼哼哼 我来啦\n")
+                        putExtra(Constant.DataTransIntent.EXTRAS_GROUP_OWNER_ADDRESS, info.groupOwnerAddress.hostAddress)
+                        putExtra(Constant.DataTransIntent.EXTRAS_GROUP_OWNER_PORT, Constant.SocketType.PORT)
+                    }
 
-                context?.startService(transIntent)
+                    context?.startService(transIntent)
+                } else {
+                    toast(R.string.wifi_direct_not_ready_yet)
+                }
             }
 
             else -> {}
