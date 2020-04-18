@@ -123,6 +123,7 @@ class DirectGroupOwnerFragment : BaseFragment(), View.OnClickListener, HandleWor
         val config = WifiP2pConfig()
         config.deviceAddress = device.deviceAddress
         config.wps.setup = WpsInfo.PBC
+        config.groupOwnerIntent = 15
         (activity as DeviceActionListener).connect(config)
     }
 }
