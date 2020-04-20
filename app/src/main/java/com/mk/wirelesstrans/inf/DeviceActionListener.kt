@@ -12,4 +12,6 @@ interface DeviceActionListener {
     fun connect(config: WifiP2pConfig)
 
     fun disconnect()
+
+    fun createGroupOwner()
 }

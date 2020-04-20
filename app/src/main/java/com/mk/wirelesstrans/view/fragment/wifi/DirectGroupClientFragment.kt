@@ -1,6 +1,9 @@
 package com.mk.wirelesstrans.view.fragment.wifi
 
 import android.content.Intent
+import android.net.wifi.WpsInfo
+import android.net.wifi.p2p.WifiP2pConfig
+import android.net.wifi.p2p.WifiP2pDevice
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,6 +14,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.mk.wirelesstrans.R
 import com.mk.wirelesstrans.data.Constant
 import com.mk.wirelesstrans.databinding.DirectGroupClientFragmentBinding
+import com.mk.wirelesstrans.inf.DeviceActionListener
 import com.mk.wirelesstrans.service.DataTransService
 import com.mk.wirelesstrans.view.activity.MainActivity
 import com.mk.wirelesstrans.view.fragment.BaseFragment
@@ -63,6 +67,7 @@ class DirectGroupClientFragment : BaseFragment(), View.OnClickListener {
             binding.deviceState.text = it.state
         })
 
+        binding.connect.setOnClickListener(this)
         binding.send.setOnClickListener(this)
     }
 
@@ -85,7 +90,24 @@ class DirectGroupClientFragment : BaseFragment(), View.OnClickListener {
                 }
             }
 
+            // 点击连接到服务端
+            R.id.connect -> {
+                connectDevice(model.wifiDirectItem.value!!.device)
+            }
+
             else -> {}
         }
+    }
+
+    /**
+     * 作为host发起连接
+     */
+    private fun connectDevice(device: WifiP2pDevice?) {
+        if (device == null) return
+
+        val config = WifiP2pConfig()
+        config.deviceAddress = device.deviceAddress
+        config.wps.setup = WpsInfo.PBC
+        (activity as DeviceActionListener).connect(config)
     }
 }

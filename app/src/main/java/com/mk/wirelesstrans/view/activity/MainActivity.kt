@@ -172,4 +172,16 @@ class MainActivity : BaseActivity(), DeviceActionListener, WifiP2pManager.Channe
         // We will try once more
         Log.v(TAG, " ------> 连接断开")
     }
+
+    override fun createGroupOwner() {
+        manager.createGroup(channel, object : WifiP2pManager.ActionListener {
+            override fun onSuccess() {
+                Log.v(TAG, " ------> 创建成功")
+            }
+
+            override fun onFailure(reason: Int) {
+                Log.v(TAG, " ------> 创建失败")
+            }
+        })
+    }
 }

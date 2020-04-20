@@ -18,6 +18,7 @@
     <string name="wifi_direct_btn_group_owner">Group Owner</string>
     <string name="wifi_direct_btn_group_client">Group Client</string>
 
+    <string name="wifi_direct_create_group_owner">Create Group Owner</string>
     <string name="wifi_direct_connect">Connect</string>
     <string name="wifi_direct_disconnect">Disconnect</string>
     <string name="wifi_direct_send">Send</string>

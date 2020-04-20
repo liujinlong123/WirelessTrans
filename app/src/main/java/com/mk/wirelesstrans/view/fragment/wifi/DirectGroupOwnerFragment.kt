@@ -1,8 +1,5 @@
 package com.mk.wirelesstrans.view.fragment.wifi
 
-import android.net.wifi.WpsInfo
-import android.net.wifi.p2p.WifiP2pConfig
-import android.net.wifi.p2p.WifiP2pDevice
 import android.net.wifi.p2p.WifiP2pInfo
 import android.os.Bundle
 import android.util.Log
@@ -62,7 +59,7 @@ class DirectGroupOwnerFragment : BaseFragment(), View.OnClickListener, HandleWor
             binding.deviceState.text = it.state
         })
 
-        binding.connect.setOnClickListener(this)
+        binding.createGroupOwner.setOnClickListener(this)
         binding.disconnect.setOnClickListener(this)
         binding.send.setOnClickListener(this)
         binding.prepare.setOnClickListener(this)
@@ -82,9 +79,9 @@ class DirectGroupOwnerFragment : BaseFragment(), View.OnClickListener, HandleWor
 
     override fun onClick(v: View?) {
         when (v?.id) {
-            // 点击连接到服务端
-            R.id.connect -> {
-                connectDevice(model.wifiDirectItem.value!!.device)
+            // 建立Group Owner
+            R.id.create_group_owner -> {
+                (activity as DeviceActionListener).createGroupOwner()
             }
 
             // 点击断开连接
@@ -114,16 +111,5 @@ class DirectGroupOwnerFragment : BaseFragment(), View.OnClickListener, HandleWor
         }
     }
 
-    /**
-     * 作为host发起连接
-     */
-    private fun connectDevice(device: WifiP2pDevice?) {
-        if (device == null) return
 
-        val config = WifiP2pConfig()
-        config.deviceAddress = device.deviceAddress
-        config.wps.setup = WpsInfo.PBC
-        config.groupOwnerIntent = 15
-        (activity as DeviceActionListener).connect(config)
-    }
 }
