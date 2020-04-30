@@ -31,27 +31,27 @@ class DataTransService constructor(
             val port = intent.extras!!.getInt(Constant.DataTransIntent.EXTRAS_GROUP_OWNER_PORT)
 
             val socket = Socket()
+            var connectedThread: ConnectedThread? = null
 
             Log.v(TAG, "点击了一下 ------> 准备发送(${host}  ${port})")
             try {
                 socket.bind(null)
                 socket.connect(InetSocketAddress(host, port), SOCKET_TIMEOUT)
+                connectedThread = ConnectedThread(socket)
 
-                val output = socket.getOutputStream()
-                output.write(content.toByteArray())
-                output.close()
+                connectedThread.start()
+                connectedThread.write(content)
 
                 Log.v(TAG, "点击了一下 ------> 发送成功(${host}  ${port})")
             } catch (e: IOException) {
                 e.printStackTrace()
             } finally {
-                if (socket.isConnected) {
-                    try {
-                        socket.close()
-                        Log.v("TAG", " ------> 这里关闭了Socket")
-                    } catch (e: IOException) {
-                        e.printStackTrace()
-                    }
+                try {
+                    // Thread.sleep(10000)
+                    connectedThread?.cancel()
+                    Log.v("TAG", " ------> 这里关闭了Socket")
+                } catch (e: Exception) {
+                    e.printStackTrace()
                 }
             }
         }
