@@ -74,12 +74,15 @@ class DirectGroupClientFragment : BaseFragment(), View.OnClickListener {
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.send -> {
+                val content = binding.input.text.toString()
+                if (content == "") return
+
                 val info = model.wifiP2pInfo.value
                 if (info != null && info.groupFormed && info.groupOwnerAddress != null) {
                     val transIntent = Intent(activity, DataTransService::class.java)
                     transIntent.apply {
                         action = Constant.DataTransIntent.ACTION_SEND_DATA
-                        putExtra(Constant.DataTransIntent.EXTRAS_STRING, "哼哼哼 我来啦\n")
+                        putExtra(Constant.DataTransIntent.EXTRAS_STRING, content)
                         putExtra(Constant.DataTransIntent.EXTRAS_GROUP_OWNER_ADDRESS, info.groupOwnerAddress.hostAddress)
                         putExtra(Constant.DataTransIntent.EXTRAS_GROUP_OWNER_PORT, Constant.SocketType.PORT)
                     }
