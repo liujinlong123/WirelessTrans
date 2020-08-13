@@ -39,8 +39,8 @@ class DataTransService constructor(
                 socket.connect(InetSocketAddress(host, port), SOCKET_TIMEOUT)
                 connectedThread = ConnectedThread(socket)
 
-                connectedThread.start()
                 connectedThread.write(content)
+                connectedThread.start()
 
                 Log.v(TAG, "点击了一下 ------> 发送成功(${host}  ${port})")
             } catch (e: IOException) {
@@ -48,7 +48,7 @@ class DataTransService constructor(
             } finally {
                 try {
                     // Thread.sleep(10000)
-                    connectedThread?.cancel()
+                    // connectedThread?.cancel()
                     Log.v("TAG", " ------> 这里关闭了Socket")
                 } catch (e: Exception) {
                     e.printStackTrace()

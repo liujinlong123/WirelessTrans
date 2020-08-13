@@ -1,10 +1,9 @@
 package com.mk.wirelesstrans.service
 
 import android.util.Log
-import java.io.IOException
-import java.io.InputStream
-import java.io.OutputStream
+import java.io.*
 import java.net.Socket
+import java.nio.charset.StandardCharsets
 
 /**
  * @ClassName:      WirelessTrans
@@ -37,20 +36,15 @@ class ConnectedThread constructor(private val mmSocket: Socket) : Thread() {
         tmpOut
     }
 
-    private var mmBuffer: ByteArray? = null
-
     override fun run() {
-        mmBuffer = ByteArray(1024)
-        var numBytes: Int
-        while (true) {
-            try {
-                numBytes = inputStream!!.read(mmBuffer!!)
+        try {
+            val content = readStream(inputStream!!)
 
-                Log.v(TAG, " ------> 正在读取 size：$numBytes")
-            } catch (e: IOException) {
-                e.printStackTrace()
-                break
-            }
+            Log.v(TAG, " ------> 收到消息 $content")
+
+            mmSocket.close()
+        } catch (e: IOException) {
+            e.printStackTrace()
         }
     }
 
@@ -71,5 +65,29 @@ class ConnectedThread constructor(private val mmSocket: Socket) : Thread() {
         } catch (e: IOException) {
             e.printStackTrace()
         }
+    }
+
+    /**
+     * Converts the contents of an InputStream to a String.
+     */
+    @Throws(IOException::class)
+    private fun readStream(stream: InputStream, maxReadSize: Int = 1024): String? {
+        var maxSize = maxReadSize
+        val reader: Reader
+        reader = InputStreamReader(stream, StandardCharsets.UTF_8)
+        val rawBuffer = CharArray(maxReadSize)
+        var readSize: Int
+        val buffer = StringBuilder()
+        while (reader.read(rawBuffer).also { readSize = it } != -1 && maxReadSize > 0) {
+            Log.v(TAG, " ------> 一次也没有读到吗")
+
+            if (readSize > maxReadSize) {
+                readSize = maxReadSize
+            }
+            buffer.append(rawBuffer, 0, readSize)
+            maxSize -= readSize
+            break
+        }
+        return buffer.toString()
     }
 }
